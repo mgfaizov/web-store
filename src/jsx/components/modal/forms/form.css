@@ -1,0 +1,241 @@
+.content {
+    color: var(--prismatic-color);
+}
+
+.content h2 {
+    font-size: 1.2em;
+    color: var(--prismatic-color);
+}
+
+.content .field-wrapper {
+    margin-top: 15px;
+    position: relative;
+}
+
+.content .field-wrapper label {
+    position: absolute;
+    pointer-events: none;
+    font-size: 0.85em;
+    top: 40%;
+    left: 0;
+    transform: translateY(-50%);
+    transition: all ease-in 0.25s;
+    color: #999999;
+}
+
+.content .field-wrapper input[type=text],
+.content .field-wrapper input[type=password],
+.content .field-wrapper input[type=submit],
+.content .field-wrapper textarea {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.content .field-wrapper input[type=text]:focus,
+.content .field-wrapper input[type=password]:focus,
+.content .field-wrapper input[type=submit]:focus,
+.content .field-wrapper textarea:focus {
+    outline: none;
+}
+
+.content .field-wrapper input[type=text],
+.content .field-wrapper input[type=password],
+.content .field-wrapper textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    line-height: 2em;
+    border-bottom: 1px solid var(--prismatic-color);
+    color: var(--text-color);
+}
+
+.content .field-wrapper input[type=text]::-webkit-input-placeholder,
+.content .field-wrapper input[type=password]::-webkit-input-placeholder,
+.content .field-wrapper textarea::-webkit-input-placeholder {
+    opacity: 0;
+}
+
+.content .field-wrapper input[type=text]::-moz-placeholder,
+.content .field-wrapper input[type=password]::-moz-placeholder,
+.content .field-wrapper textarea::-moz-placeholder {
+    opacity: 0;
+}
+
+.content .field-wrapper input[type=text]:-ms-input-placeholder,
+.content .field-wrapper input[type=password]:-ms-input-placeholder,
+.content .field-wrapper textarea:-ms-input-placeholder {
+    opacity: 0;
+}
+
+.content .field-wrapper input[type=text]:-moz-placeholder,
+.content .field-wrapper input[type=password]:-moz-placeholder,
+.content .field-wrapper textarea:-moz-placeholder {
+    opacity: 0;
+}
+
+.content .field-wrapper input[type=text]:focus+label,
+.content .field-wrapper input[type=text]:not(:placeholder-shown)+label,
+.content .field-wrapper input[type=password]:focus+label,
+.content .field-wrapper input[type=password]:not(:placeholder-shown)+label,
+.content .field-wrapper textarea:focus+label,
+.content .field-wrapper textarea:not(:placeholder-shown)+label {
+    top: -10%;
+    color: var(--text-up-color);
+}
+
+.content .field-wrapper input[type=submit] {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    width: 100%;
+    background: var(--prismatic-color);
+    line-height: 2em;
+    color: #fff;
+    border: 1px solid var(--prismatic-color);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.content .field-wrapper input[type=submit]:hover {
+    opacity: 0.9;
+}
+
+.content .field-wrapper input[type=submit]:active {
+    transform: scale(0.96);
+}
+
+.content .field-wrapper textarea {
+    resize: none;
+    line-height: 1em;
+}
+
+.content .field-wrapper textarea:focus+label,
+.content .field-wrapper textarea:not(:placeholder-shown)+label {
+    top: -10%;
+}
+
+
+
+/* стили селектов */
+
+.content .field-wrapper .select-label {
+    top: -10%;
+}
+
+.select {
+    width: 100%;
+    /* min-width: 15ch; */
+    /* max-width: 30ch; */
+    border: 1px solid var(--select-border);
+    /* border-radius: 0.25em; */
+    /* padding: 0.25em 0.5em; */
+    /* font-size: 1.25rem; */
+    /* cursor: pointer; */
+    /* line-height: 1.1; */
+    background-color: #fff;
+    /* background-image: linear-gradient(to top, #f9f9f9, #fff 33%); */
+    /* display: grid; */
+    /* grid-template-areas: "select"; */
+    /* align-items: center; */
+}
+
+select,
+.select:after {
+    grid-area: select;
+}
+
+/* select:focus+.focus {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border: 2px solid var(--select-focus);
+    border-radius: inherit;
+} */
+
+
+.content .field-wrapper select {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background: transparent;
+    line-height: 2em;
+    border-bottom: 1px solid var(--prismatic-color);
+    color: var(--text-color);
+    /* background: #ddd; */
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.content .field-wrapper select:hover {
+    color: var(--prismatic-color);
+    background: #ddd;
+}
+
+
+.content .field-wrapper select:focus {
+    outline: none;
+}
+
+.content .field-wrapper select::-ms-expand {
+    display: none;
+}
+
+.content .field-wrapper select option {
+    background-color: var(--prismatic-color);
+    color: #fff;
+
+
+    /* background-color: white; */
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.content .field-wrapper select:focus+label,
+.content .field-wrapper select:not(:placeholder-shown)+label {
+    top: -10%;
+    color: var(--text-up-color);
+}
+
+/* Кастомный стиль стрелки */
+.content .field-wrapper .select::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--prismatic-color);
+    pointer-events: none;
+}
+
+/* Кастомный стиль фона выпадающего списка */
+.content .field-wrapper select::-ms-expand,
+.content .field-wrapper select::-ms-value {
+    background: transparent;
+}
+
+/* Кастомный стиль выпадающего списка */
+.content .field-wrapper select::-ms-expand {
+    opacity: 0;
+}
+
+.content .field-wrapper select::-ms-value {
+    color: var(--text-color);
+}
+
+/* Кастомный стиль стрелки для Firefox */
+@-moz-document url-prefix() {
+    .content .field-wrapper select {
+        padding-right: 25px;
+    }
+
+    .content .field-wrapper select::after {
+        right: 5px;
+    }
+}

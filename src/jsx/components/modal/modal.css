@@ -1,0 +1,42 @@
+:root {
+    /* #07ad90 / #5f7baf*/
+    --prismatic-color: #5f7baf;
+    --text-up-color: #42509e;
+    --text-color: #10c705;
+}
+
+/* .myModal {
+
+} */
+
+.myModalWrapper {
+    /* width: 250px; */
+    /* height: 350px; */
+    /* margin: 60px auto; */
+    /* perspective: 1000px; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* text-align: left; */
+}
+.rec-prism {
+    width: 300px;
+    /* width: 100%; */
+    /* height: 100%; */
+    /* position: absolute; */
+    padding: 20px;
+    background: rgb(250, 250, 250);
+    border: 1px solid var(--prismatic-color);
+    border-radius: 3px;
+    /* backdrop-filter: blur(25px); */  
+    position: relative;
+    /* transform-style: preserve-3d; */
+    /* transform: translateZ(0px); */
+    /* transition: transform 0.5s ease-in; */
+    /* -webkit-transform: translateZ(0px); */
+}
+
+.error {
+    color: var(--text-up-color);
+}

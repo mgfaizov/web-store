@@ -1,0 +1,244 @@
+:root {
+    --color-bg-primary: #23272a;
+    /* --color-bg-primary-offset: #B0B0B0; */
+    --color-bg-primary-offset: #5f7baf;
+    --color-bg-secondary: #2c2f33;
+    --color-text-primary: #fff;
+    --color-text-primary-offset: #fff;
+    --color-orange: #FF6347;
+    --color-green: #228B22;
+
+    /* --color-bg-primary: #d0d6df;
+    --color-bg-primary-offset: #f1f3f7;
+    --color-bg-secondary: #fff;
+    --color-text-primary: #3a3c42;
+    --color-text-primary-offset: #898c94;
+    --color-orange: #FF6347;
+    --color-green: #228B22; */
+
+    --color-purple: #9665c4;
+    --color-black: var(--color-text-primary);
+    --color-red: #d92027;
+    --color-black: #000;
+    --internal-light-dark: #f00;
+
+}
+
+/* .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #d7d7d7;
+    padding: 0 10%;
+}
+
+.title {
+    color: #333;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 18px;
+} */
+
+.menu-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-panel input[type=submit] {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    /* width: 100%; */
+    background: var(--prismatic-color);
+    line-height: 2em;
+    color: #fff;
+    border: 1px solid var(--prismatic-color);
+    border-radius: 5px;
+    padding: 0 10px;
+    padding: 3px 20px;
+}
+
+.menu-panel input[type=submit].Auth {
+    margin-left: 1rem;
+}
+
+.menu-panel input[type=submit]:focus {
+    outline: none;
+}
+
+.menu-panel input[type=submit]:hover {
+    background: #3e4f6e;
+    border: 1px solid #313d55;
+    /* opacity: 0.7; */
+}
+
+.container {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--color-bg-primary);
+    color: #fff;
+}
+
+.company {
+    display: flex;
+    align-items: center;
+}
+
+.company-name {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.search {
+    position: relative;
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+}
+
+.clear-search {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    right: 10px;
+
+    /* top: 14px; */
+    color: #707070;
+    float: right;
+    /* right: 300px; */
+    font-size: 25px;
+    font-weight: bold;
+    /* z-index: 2; */
+    position: absolute;
+}
+
+.clear-search:hover {
+    color: rgb(255, 0, 0);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.search-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+.search-button:hover {
+    cursor: pointer;
+}
+
+
+
+.menu-panel-item {
+    position: relative;
+    display: flex;
+}
+
+.menu-panel-list {
+    /* margin: 0;
+    display: block;
+    width: 100%; */
+
+    /* padding: 8px; */
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 100%;
+    list-style-type: none;
+}
+
+
+.button-group {
+    margin-right: 10px;
+    cursor: pointer;
+    /* z-index: 5; */
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    border-radius: 5px;
+    justify-content: space-between;
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.button-group span {
+    padding-left: 40px;
+    margin-right: 10px;
+}
+
+.control-button:hover svg.fa {
+    color: var(--color-text-primary);
+}
+
+.control-button svg.fa {
+    height: 29px;
+    margin-right: 10px;
+    color: var(--color-text-primary-offset);
+}
+
+.control-button {
+    font: inherit;
+    outline: none;
+    border: 0;
+    /* padding: 10px 15px; */
+    border-radius: 5px;
+    background-color: var(--color-bg-secondary);
+}
+
+.control-button:hover {
+    background-color: var(--color-bg-primary-offset);
+}
+
+.control-button:hover+.menu-sub-list {
+    display: flex;
+}
+
+.control-button:hover svg {
+    fill: var(--color-text-primary);
+}
+
+.control-button svg {
+    width: 100%;
+    margin-right: 10px;
+    fill: var(--color-text-primary-offset);
+}
+
+.control-button:hover:disabled {
+    color: var(--color-text-primary-offset);
+}
+
+.control-button p {
+    height: 10px;
+}
+
+.cart-button {
+    font: inherit;
+    outline: none;
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: var(--color-bg-secondary);
+}

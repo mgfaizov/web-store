@@ -1,0 +1,33 @@
+:root {
+    --main-color: #9BC53D;
+    --secondary-color: #EBFFFA;
+    --background-color: #ffffff;
+    --color-bg-primary: #23272a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    /* font-family: Tahoma, Verdana, Segoe, sans-serif; */
+    font-family: 'Avenir Next', Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+    /* color: var(--secondary-color); */
+    background: var(--background-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.main {
+    flex: 1;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
