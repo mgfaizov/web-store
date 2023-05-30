@@ -3,15 +3,15 @@ import React, { useState, useContext, useEffect } from 'react';
 import './form.css';
 
 // import AppContext from '../../../contexts/AppContext.jsx';
-import AuthContext from '../../../contexts/AuthContext.jsx';
+// import AuthContext from '../../../contexts/AuthContext.jsx';
 
-function AuthForm({ closeModal, updateUserList, updateUserId }) {
+function AuthForm({ closeModal, setIsAuth, updateUserList, updateUserId }) {
 
     // console.log("user validation errors in ( NewProfile.jsx ) : ", errors);
 
     // получение функции из контекста
     // const { errors, setErrors, errorServer, setErrorServer } = useContext(AppContext);
-    const { setIsAuth } = useContext(AuthContext);
+    // const { setIsAuth } = useContext(AuthContext);
 
     const [errors, setErrors] = useState('');
     const [errorServer, setErrorServer] = useState({});

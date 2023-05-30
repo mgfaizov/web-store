@@ -2,16 +2,16 @@ import React, { useState, useContext } from 'react';
 
 import './form.css';
 
-import AuthContext from '../../../contexts/AuthContext.jsx';
-import AppContext from '../../../contexts/AppContext.jsx';
+// import AuthContext from '../../../contexts/AuthContext.jsx';
+// import AppContext from '../../../contexts/AppContext.jsx';
 
-function RegForm({ closeModal, updateUserList, role }) {
+function RegForm({ closeModal, setErrors, updateUserList, role }) {
 
     console.log("RegForm component");
     // console.log("user validation errors in ( RegForm.jsx ) : ", errors);
 
     // const { role } = useContext(AuthContext);
-    const { setErrors } = useContext(AppContext);
+    // const { setErrors } = useContext(AppContext);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');

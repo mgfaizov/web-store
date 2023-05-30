@@ -4,13 +4,14 @@ import './ProductCard.css';
 
 import AppContext from '../../../contexts/AppContext.jsx';
 
-function ProductCard({ product, role }) {
+function ProductCard({ isAuth, product, role, id }) {
 
     const { updateProductList } = useContext(AppContext);
 
     const [isClicked, setIsClicked] = useState(false);
 
     // deleteProduct ------------------------------------------------------------------- //
+    // Удаление карточки товара
     const deleteProductCard = (id) => {
         fetch(`/products/${id}`, {
             method: "DELETE",
@@ -31,8 +32,9 @@ function ProductCard({ product, role }) {
     };
     // ------------------------------------------------------------------- deleteProduct //
 
-    const removeProductToCart = () => {
-        fetch(`/cart/${id}`, {
+    // Удаление товара из корзины
+    const removeProductFromCart = (cartId) => {
+        fetch(`/cart/${cartId}`, {
             method: "DELETE",
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -51,67 +53,96 @@ function ProductCard({ product, role }) {
             .catch((error) => {
                 console.log(error);
             });
-       
+
     };
 
+    // Добавление товара в корзину
     const addProductToCart = () => {
-        const data = {
-            productName: product.productName,
-            price: product.price,
-        };
+        const productId = product.id; // Получите идентификатор продукта из объекта product
+        const userId = id; // Получите идентификатор пользователя, если требуется
+
+        // const data = {
+        //     product: productId,
+        //     user: userId,
+        //     quantity: 1,
+        // };
         const token = localStorage.getItem('token');
         const headers = {
             'Content-Type': 'application/json',
-            'Authorization': token
+            'Authorization': token,
         };
-        fetch('/cart/submit', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            // body: formData,
-            headers
+
+        // Запрос на получение объекта продукта
+        fetch(`/products/${productId}`, {
+            method: 'GET',
+            headers,
         })
-            .then(async response => {
-                if (response.ok) {
-                    console.log("RegProfile.response.OK: ", response);
-                    return response.json(); // преобразуем тело ответа в JSON объект;
-                } else {
-                    console.error("RegProfile.response.ERROR: ", response);
+            .then(response => response.json())
+            .then(productData => {
+                // Запрос на получение объекта пользователя
+                fetch(`/users/${userId}`, {
+                    method: 'GET',
+                    headers,
+                })
+                    .then(response => response.json())
+                    .then(userData => {
+                        const data = {
+                            product: productData,
+                            user: userData,
+                            quantity: 1,
+                        };
 
-                    const responseErrors = {}; // сохраняем ошибки в объект
-                    const responseData = await response.json(); // преобразуем тело ответа в JSON объект
-                    responseData.forEach(error => {
-                        const field = error.field;
-                        const message = error.defaultMessage;
-                        const code = error.code;
+                        fetch('/cart/submit', {
+                            method: 'POST',
+                            body: JSON.stringify(data),
+                            headers,
+                        })
+                            .then(async response => {
+                                if (response.ok) {
+                                    console.log('ProductCard.response.OK: ', response);
+                                    return response.json();
+                                } else {
+                                    console.error('ProductCard.response.ERROR: ', response);
 
-                        if (!responseErrors[field]) {
-                            responseErrors[field] = {};
-                        }
-                        if (!responseErrors[field][code]) {
-                            responseErrors[field][code] = [message];
-                        } else {
-                            responseErrors[field][code].push(message);
-                        }
+                                    const responseErrors = {};
+                                    const responseData = await response.json();
+                                    responseData.forEach(error => {
+                                        const field = error.field;
+                                        const message = error.defaultMessage;
+                                        const code = error.code;
+
+                                        if (!responseErrors[field]) {
+                                            responseErrors[field] = {};
+                                        }
+                                        if (!responseErrors[field][code]) {
+                                            responseErrors[field][code] = [message];
+                                        } else {
+                                            responseErrors[field][code].push(message);
+                                        }
+                                    });
+
+                                    setModalErrors(responseErrors);
+                                    return Promise.reject(response);
+                                }
+                            })
+                            .then(data => {
+                                setIsClicked(true);
+                            })
+                            .catch(error => {
+                                throw new Error(
+                                    `Ошибка при обработке ответа сервера. Код ошибки: ${error.status}. Текст ошибки: ${error.message}`
+                                );
+                            });
+                    })
+                    .catch(error => {
+                        console.log("Ошибка в запросе на получение объекта продукта:", error);
                     });
-                    //setResult({}); // Сброс данных
-                    setModalErrors(responseErrors);
-                    return Promise.reject(response);
-                    // throw new Error(JSON.stringify(responseErrors));
-
-                }
-            })
-            .then(data => {
-                setIsClicked(true); // Устанавливаем состояние isClicked в true
-                //setResult(data);
-                // updateProductList(); // 
-                // setErrors({}); // Сброс ошибок
-                // closeModal(); // Закрытие модального окна
             })
             .catch(error => {
-                // setErrors(error);
-                throw new Error(`Ошибка при обработке ответа сервера. Код ошибки: ${error.status}. Текст ошибки: ${error.message}`);
+                console.log("Ошибка в запросе на получение объекта пользователя:", error);
             });
     };
+
 
     return (
         <>
@@ -128,16 +159,20 @@ function ProductCard({ product, role }) {
                                 <h1>{product.productName}</h1>
                                 <p>{product.price + " руб."}</p>
                             </div>
-                            <div className="buy" onClick={() => addProductToCart()}><i className="material-icons">add_shopping_cart</i></div>
+                            {isAuth && (
+                                <div className="buy" onClick={() => addProductToCart()}><i className="material-icons">add_shopping_cart</i></div>
+                            )}
                         </div>
-                        <div className="right">
-                            <div className="done"><i className="material-icons">done</i></div>
-                            <div className="details">
-                                <h1>Chair</h1>
-                                <p>Added to your cart</p>
+                        {isAuth && (
+                            <div className="right">
+                                <div className="done"><i className="material-icons">done</i></div>
+                                <div className="details">
+                                    <h1>Chair</h1>
+                                    <p>Added to your cart</p>
+                                </div>
+                                <div className="remove" onClick={() => removeProductFromCart(product.id)}><i className="material-icons">clear</i></div>
                             </div>
-                            <div className="remove" onClick={() => removeProductToCart()}><i className="material-icons">clear</i></div>
-                        </div>
+                        )}
                     </div>
                 </div>
                 <div className="inside">

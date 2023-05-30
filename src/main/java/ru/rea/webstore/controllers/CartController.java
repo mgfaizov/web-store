@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.rea.webstore.models.cart.Cart;
@@ -22,11 +23,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
-    
+
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
-    
+
     @PostMapping("/submit")
     public ResponseEntity<?> createCart(@Valid @RequestBody Cart cart, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -36,7 +37,7 @@ public class CartController {
             return ResponseEntity.ok(savedCart);
         }
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Cart> getCartById(@PathVariable("id") long id) {
         Cart cart = cartService.getCartById(id);
@@ -45,15 +46,16 @@ public class CartController {
         }
         return ResponseEntity.ok(cart);
     }
-    
+
     @GetMapping("/all")
     public ResponseEntity<List<Cart>> getAllCarts() {
         List<Cart> cartList = cartService.getAllCarts();
         return ResponseEntity.ok(cartList);
     }
-    
+
     @PostMapping("/{id}")
-    public ResponseEntity<?> updateCart(@PathVariable("id") Long id, @Valid @RequestBody UpdateCartDTO updateCartDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> updateCart(@PathVariable("id") Long id, @Valid @RequestBody UpdateCartDTO updateCartDTO,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getFieldErrors());
         } else {
@@ -61,10 +63,30 @@ public class CartController {
             return ResponseEntity.ok(updatedCart);
         }
     }
-    
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCart(@PathVariable("id") Long id) {
-        cartService.deleteCartById(id);
+    public ResponseEntity<Void> removeProductFromCart(@PathVariable("id") Long id) {
+        cartService.removeProductFromCart(id);
         return ResponseEntity.ok().build();
     }
+
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> removeProductFromCart(@RequestParam("id") Long id) {
+    // cartService.removeProductFromCart(id);
+    // return ResponseEntity.ok().build();
+    // }
+
+
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> removeProductFromCart(@PathVariable("id") Long
+    // cartId) {
+    // cartService.removeProductFromCart(cartId);
+    // return ResponseEntity.ok().build();
+    // }
+
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> deleteCart(@PathVariable("id") Long id) {
+    // cartService.deleteCartById(id);
+    // return ResponseEntity.ok().build();
+    // }
 }

@@ -1287,6 +1287,7 @@ table td .delete-button {
 }
 
 .wrapper-card .container-card .bottom .right .remove {
+    cursor: pointer;
     width: calc(30% - 1px);
     clear: both;
     border-right: solid thin rgba(255, 255, 255, 0.3);
