@@ -20,6 +20,10 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    // public Product getProductByName(String productName) {
+    //     return productRepository.findByProductName(productName);
+    // }
+
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }

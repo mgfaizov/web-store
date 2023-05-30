@@ -29,7 +29,8 @@ function Header() {
         isModalOpen, setIsModalOpen,
         modalContent, setModalContent,
         isMenuOpen, setIsMenuOpen,
-        searchValue, setSearchValue
+        searchValue, setSearchValue,
+        errors, setErrors
     } = useContext(AppContext);
 
     const { isAuth, setIsAuth, setUser, user, id, setUsers, setId, setRole } = useContext(AuthContext);
@@ -209,9 +210,9 @@ function Header() {
         setIsModalOpen(true);
         setModalContent(
             type === 'Reg' ? (
-                <RegForm closeModal={() => setIsModalOpen(false)} updateUserList={updateUserList} />
+                <RegForm closeModal={() => setIsModalOpen(false)} setErrors={setErrors} updateUserList={updateUserList} />
             ) : (
-                <AuthForm closeModal={() => setIsModalOpen(false)} updateUserList={updateUserList} updateUserId={updateUserId} />
+                <AuthForm closeModal={() => setIsModalOpen(false)} setIsAuth={setIsAuth} updateUserList={updateUserList} updateUserId={updateUserId} />
             )
         );
     };

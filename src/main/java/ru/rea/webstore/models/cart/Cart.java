@@ -1,14 +1,15 @@
 package ru.rea.webstore.models.cart;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import ru.rea.webstore.models.product.Product;
+import ru.rea.webstore.models.user.User;
 
 @Entity
 @Data
@@ -19,16 +20,15 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Наименование обязательно")
-    @Column(name = "product_name")
-    private String productName;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @DecimalMin(value = "0.0", inclusive = false, message = "Цена должна быть больше нуля")
-    @Column(name = "price")
-    private Integer price;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    /* @NotBlank(message = "Описание обязательно")
-    @Column(name = "description")
-    private String description; */
+    private int quantity;
+
 
 }

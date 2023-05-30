@@ -1,7 +1,5 @@
 package ru.rea.webstore.models.cart;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /** 
@@ -13,11 +11,7 @@ import lombok.Data;
 public class UpdateCartDTO {
 
     private long id;
-
-    @NotBlank(message = "Наименование обязательно")
-    private String productName;
-    @DecimalMin(value = "0.0", inclusive = false, message = "Цена должна быть больше нуля")
-    private Integer price;
-    // private String description;
+    private int quantity;
+    private long productId;
 
 }

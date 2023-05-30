@@ -8,7 +8,7 @@ import AuthContext from '../../../contexts/AuthContext.jsx';
 function ProductList() {
 
   const { products, updateProductList, searchValue } = useContext(AppContext);
-  const { role } = useContext(AuthContext);
+  const { isAuth, role, id } = useContext(AuthContext);
 
   // фильтр -----------------------------------------------------------------------
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -38,7 +38,7 @@ function ProductList() {
   return (
     <div className="product-card">
       {filteredProducts.map(product => (
-        <ProductCard key={product.id} product={product} role={role} />
+        <ProductCard key={product.id} product={product} isAuth={isAuth} role={role} id={id} />
       ))}
     </div>
   );
