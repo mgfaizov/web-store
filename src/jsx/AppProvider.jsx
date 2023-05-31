@@ -11,6 +11,8 @@ const AppProvider = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [errorServer, setErrorServer] = useState({});
 
+    const [isClicked, setIsClicked] = useState(false);
+
     const [searchValue, setSearchValue] = useState('');
 
     const [products, setProducts] = useState([]);
@@ -82,6 +84,8 @@ const AppProvider = (props) => {
         products, setProducts,
         // productListUpdated, setProductListUpdated,
         updateProductList, 
+
+        isClicked, setIsClicked,
 
         searchValue, setSearchValue
     };

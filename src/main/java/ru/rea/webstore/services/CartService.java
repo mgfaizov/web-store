@@ -55,14 +55,6 @@ public class CartService {
         cartRepository.deleteByProductId(productId);
     }
 
-    // public void removeProductFromCart(Long productId) {
-    //     cartRepository.deleteById(productId);
-    // }
-
-    // public void removeProductFromCart(Long cartId) {
-    //     cartRepository.deleteById(cartId);
-    // }
-
     public void deleteCartById(Long id) {
         cartRepository.deleteById(id);
     }

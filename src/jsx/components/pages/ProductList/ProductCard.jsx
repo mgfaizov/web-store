@@ -1,14 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import './ProductCard.css';
 
 import AppContext from '../../../contexts/AppContext.jsx';
 
-function ProductCard({ isAuth, product, role, id }) {
+function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
 
     const { updateProductList } = useContext(AppContext);
 
-    const [isClicked, setIsClicked] = useState(false);
+    // const [isClicked, setIsClicked] = useState(false);
+
+    useEffect(() => {
+        // проверка продукта в корзине ----------------------------------------------------- //
+        if (isAuth) {
+            fetch(`/cart/all`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setIsClicked(true);
+                    // setIsClicked(data.isInCart);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, [isAuth, product.id, id]);
+    // проверка продукта в корзине ----------------------------------------------------- //
+
 
     // deleteProduct ------------------------------------------------------------------- //
     // Удаление карточки товара
@@ -49,6 +71,7 @@ function ProductCard({ isAuth, product, role, id }) {
             })
             .then(data => {
                 setIsClicked(false); // Устанавливаем состояние isClicked в false
+                updateProductList();
             })
             .catch((error) => {
                 console.log(error);

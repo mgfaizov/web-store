@@ -30,6 +30,7 @@ function Header() {
         modalContent, setModalContent,
         isMenuOpen, setIsMenuOpen,
         searchValue, setSearchValue,
+        setIsClicked,
         errors, setErrors
     } = useContext(AppContext);
 
@@ -176,12 +177,14 @@ function Header() {
             })
             .then(data => {
                 localStorage.removeItem('token');
+                setIsClicked(false);
                 setIsMenuOpen(!isMenuOpen);
                 setIsAuth(false);
                 setId(null);
                 setRole(null);
                 setUser({})
                 setUsers([]);
+                
                 // updateUserList();
                 history.push('/'); // Перенаправление на главную страницу
             })

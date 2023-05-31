@@ -7,8 +7,10 @@ import AuthContext from '../../../contexts/AuthContext.jsx';
 
 function ProductList() {
 
-  const { products, updateProductList, searchValue } = useContext(AppContext);
+  const { products, updateProductList, searchValue, isClicked, setIsClicked } = useContext(AppContext);
   const { isAuth, role, id } = useContext(AuthContext);
+
+  // const [isClicked, setIsClicked] = useState(false);
 
   // фильтр -----------------------------------------------------------------------
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -27,18 +29,97 @@ function ProductList() {
 
 
 
-  // Логика для получения данных о товарах (например, через API) и их установки в состояние
-  /*   useEffect(() => {
-      // Пример запроса к API для получения списка товаров
-      fetch('/products/all')
-        .then(response => response.json())
-        .then(data => setProducts(data));
-    }, []); */
+  // useEffect(() => {
+  //   // Проверить наличие товара в корзине для авторизованного пользователя
+  //   if (isAuth) {
+  //     fetch(`/cart/all`, {
+  //       method: "GET",
+  //       headers: {
+  //         'Authorization': localStorage.getItem('token')
+  //       }
+  //     })
+  //       .then((response) => {
+  //         if (response.ok) {
+  //           return response.json();
+  //         } else {
+  //           throw new Error("Failed to fetch cart data.");
+  //         }
+  //       })
+  //       .then((cartItems) => {
+  //         // Проверить каждый товар в корзине
+  //         cartItems.forEach((cartItem) => {
+  //           if (cartItem.product.id === product.id && cartItem.user.id === id) {
+  //             setIsClicked(true);
+  //           }
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [isAuth, product.id, id]);
+
+
+
+  useEffect(() => {
+    // Проверить наличие товара в корзине для авторизованного пользователя
+    if (isAuth) {
+      fetch(`/cart/all`, {
+        method: "GET",
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Failed to fetch cart data.");
+          }
+        })
+        .then((cartItems) => {
+          const clickedProducts = {};
+          // Проверить каждый товар в корзине
+          cartItems.forEach((cartItem) => {
+            const { product, user } = cartItem;
+            filteredProducts.forEach((filteredProduct) => {
+              if (filteredProduct.id === product.id && user.id === id) {
+                clickedProducts[filteredProduct.id] = true;
+                // setIsClicked(true);
+                
+              } 
+            });
+          });
+          // setIsClicked(true);
+          setIsClicked(clickedProducts);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [isAuth, filteredProducts, id]);
 
   return (
     <div className="product-card">
       {filteredProducts.map(product => (
-        <ProductCard key={product.id} product={product} isAuth={isAuth} role={role} id={id} />
+        <ProductCard 
+          key={product.id} 
+          product={product} 
+          isAuth={isAuth} 
+          role={role} 
+          id={id} 
+          isClicked={isClicked?.[product.id] ?? false}
+          // isClicked={isClicked && isClicked.hasOwnProperty(product.id) ? isClicked[product.id] : false}
+          // isClicked={isClicked[product.id] || false}
+          // setIsClicked={setIsClicked} 
+          setIsClicked={(value) => {
+            setIsClicked((prev) => ({
+              ...prev,
+              [product.id]: value
+            }));
+          }}
+
+          />
       ))}
     </div>
   );

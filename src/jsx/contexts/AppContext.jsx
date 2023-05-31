@@ -22,6 +22,9 @@ const AppContext = React.createContext({
     errorServer: {}, 
     setErrorServer: () => { },
 
+    isClicked: false, 
+    setIsClicked: () => { },
+
     searchValue: '', 
     setSearchValue: () => { },
 
