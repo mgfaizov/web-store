@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import java.util.List;
+// import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,12 +15,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+// import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 // import lombok.Getter;
 // import lombok.Setter;
-import ru.rea.webstore.models.cart.Cart;
+// import ru.rea.webstore.models.cart.Cart;
 
 // модель данных для пользователя
 @Entity
@@ -95,6 +95,9 @@ public class User {
     @Column(name = "status")
     // @Getter @Setter
     private Status status;
+
+    // @OneToMany(mappedBy = "user")
+    // private List<Cart> carts;
 
     // @OneToMany(mappedBy = "user")
     // private List<Cart> carts;
