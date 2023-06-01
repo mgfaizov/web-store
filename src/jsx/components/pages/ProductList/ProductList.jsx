@@ -29,38 +29,6 @@ function ProductList() {
 
 
 
-  // useEffect(() => {
-  //   // Проверить наличие товара в корзине для авторизованного пользователя
-  //   if (isAuth) {
-  //     fetch(`/cart/all`, {
-  //       method: "GET",
-  //       headers: {
-  //         'Authorization': localStorage.getItem('token')
-  //       }
-  //     })
-  //       .then((response) => {
-  //         if (response.ok) {
-  //           return response.json();
-  //         } else {
-  //           throw new Error("Failed to fetch cart data.");
-  //         }
-  //       })
-  //       .then((cartItems) => {
-  //         // Проверить каждый товар в корзине
-  //         cartItems.forEach((cartItem) => {
-  //           if (cartItem.product.id === product.id && cartItem.user.id === id) {
-  //             setIsClicked(true);
-  //           }
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [isAuth, product.id, id]);
-
-
-
   useEffect(() => {
     // Проверить наличие товара в корзине для авторизованного пользователя
     if (isAuth) {
