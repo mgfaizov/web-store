@@ -63,7 +63,7 @@ const AppProvider = (props) => {
             .then(data => setProducts(data))
             .catch((error) => {
                 console.log(error);
-                openErrorModal(error.message);
+                // openErrorModal(error.message);
             });
     }, []);
 
