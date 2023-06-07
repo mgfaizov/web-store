@@ -1,6 +1,8 @@
 package ru.rea.webstore.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -46,6 +48,39 @@ public class CartController {
         return ResponseEntity.ok(cart);
     }
 
+    // @GetMapping("/check/{id}")
+    // public ResponseEntity<Map<String, Boolean>> checkCartById(@PathVariable("id")
+    // long id) {
+    // boolean isInCart = cartService.checkCartById(id);
+    // Map<String, Boolean> response = new HashMap<>();
+    // response.put("isInCart", isInCart);
+    // return ResponseEntity.ok(response);
+    // }
+
+
+    @GetMapping("/check/{id}")
+    public ResponseEntity<?> checkCartById(@PathVariable("id") long id) {
+    boolean isInCart = cartService.checkCartById(id);
+    return ResponseEntity.ok(isInCart);
+    }
+
+    // @GetMapping("/check/{id}")
+    // public ResponseEntity<Boolean> checkCartById(@PathVariable("id") long id) {
+    // boolean isInCart = cartService.checkCartById(id);
+    // return ResponseEntity.ok(isInCart);
+    // }
+
+    // @GetMapping("/check/{id}")
+    // public ResponseEntity<?> checkCartById(@PathVariable("id") long id) {
+    // boolean isInCart = cartService.checkCartById(id);
+
+    // if (isInCart) {
+    // return ResponseEntity.ok(true);
+    // } else {
+    // return ResponseEntity.ok(false);
+    // }
+    // }
+
     @GetMapping("/all")
     public ResponseEntity<List<Cart>> getAllCarts() {
         List<Cart> cartList = cartService.getAllCarts();
@@ -69,8 +104,15 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> clearCart() {
+        cartService.clearCart();
+        return ResponseEntity.ok().build();
+    }
+
     // @DeleteMapping("/{id}")
-    // public ResponseEntity<Void> removeProductFromCart(@RequestParam("id") Long id) {
+    // public ResponseEntity<Void> removeProductFromCart(@RequestParam("id") Long
+    // id) {
     // cartService.removeProductFromCart(id);
     // return ResponseEntity.ok().build();
     // }

@@ -124,9 +124,10 @@
 }
 
 .wrapper-card .container-card .bottom .right .details {
-    padding: 20px;
+    /* padding: 20px; */
+    padding-top: 10px;
     float: right;
-    width: calc(70% - 40px);
+    width: calc(70% - 15px);
 }
 
 .wrapper-card .container-card .bottom .right .done {

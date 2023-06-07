@@ -163,9 +163,9 @@ ul {
     color: inherit;
     outline: none;
     border: 0;
-    /* padding: 8px 8px; */
+    padding: 8px 8px;
     /* width: 100%; */
-    width: 172px;
+    width: 192px;
     margin-right: 40px;
     border-radius: 8px;
     display: flex;
@@ -176,7 +176,7 @@ ul {
 }
 
 .second {
-    font-size: 10pt;
+    font-size: 11pt;
     color: var(--color-bg-primary-offset);
 }
 
@@ -185,8 +185,8 @@ ul {
     color: inherit;
     outline: none;
     border: 0;
-    margin: 2px 0;
-    padding: 4px 8px;
+    margin: 0px 10px;
+    padding: 5px 10px;
     /* width: 100%; */
     border-radius: 5px;
     display: flex;
@@ -235,7 +235,7 @@ ul {
 .menu-button span.second {
     color: var(--color-text-primary-offset);
     font-size: small;
-    margin-left: 5px;
+    /* margin-left: 5px; */
 }
 
 .menu-button--orange svg:first-of-type {

@@ -2,11 +2,24 @@ import React, { useContext, useState, useEffect } from 'react';
 
 import './ProductCard.css';
 
+import Modal from '../../../components/modal/Modal.jsx';
+
 import AppContext from '../../../contexts/AppContext.jsx';
 
 function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
 
-    const { updateProductList } = useContext(AppContext);
+    const {
+        updateProductList,
+        isModalOpen, setIsModalOpen, modalContent, setModalContent
+    } = useContext(AppContext);
+
+    const openErrorModal = (errorMessage) => {
+        console.log('MainComponent.openErrorModal.errorMessage:', errorMessage);
+        setIsModalOpen(true);
+        setModalContent(
+            <div className="error">{errorMessage}</div>
+        );
+    };
 
     // const [isClicked, setIsClicked] = useState(false);
 
@@ -34,7 +47,7 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
 
     // deleteProduct ------------------------------------------------------------------- //
     // Удаление карточки товара
-    const deleteProductCard = (id) => {
+    /* const deleteProductCard = (id) => {
         fetch(`/products/${id}`, {
             method: "DELETE",
             headers: {
@@ -45,7 +58,47 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
                 if (response.ok) {
                     updateProductList();
                 } else {
-                    throw new Error("Failed to delete user.");
+                    throw new Error("Не удалось удалить.");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }; */
+
+    const deleteProductCard = (id) => {
+        // Проверка наличия товара в корзине пользователя
+        fetch(`/cart/check/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data) {
+                    // Если товар есть в корзине, выводим сообщение
+                    openErrorModal('Пока товар находится в корзине пользователя. Удаление невозможно.');
+                    
+                } else {
+                    // Если товар отсутствует в корзине, удаляем карточку товара
+                    fetch(`/products/${id}`, {
+                        method: "DELETE",
+                        headers: {
+                            'Authorization': localStorage.getItem('token')
+                        }
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                updateProductList();
+                            } else {
+                                openErrorModal('Пока товар находится в корзине пользователя. Удаление невозможно.');
+                                throw new Error("Не удалось удалить.");
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
                 }
             })
             .catch((error) => {
@@ -54,8 +107,8 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
     };
     // ------------------------------------------------------------------- deleteProduct //
 
-    // Удаление товара из корзины
-    const removeProductFromCart = (cartId) => {
+    // Удаление товара из корзины ------------------------------------------------------- //
+    /* const removeProductFromCart = (cartId) => {
         fetch(`/cart/${cartId}`, {
             method: "DELETE",
             headers: {
@@ -66,7 +119,7 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
                 if (response.ok) {
                     updateProductList();
                 } else {
-                    throw new Error("Failed to delete user.");
+                    throw new Error("Не удалось удалить.");
                 }
             })
             .then(data => {
@@ -77,7 +130,32 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
                 console.log(error);
             });
 
+    }; */
+
+    const removeProductFromCart = (cartId) => {
+        fetch(`/cart/${cartId}`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    throw new Error("Не удалось удалить.");
+                }
+            })
+            .then(data => {
+                setIsClicked(false); // Устанавливаем состояние isClicked в false
+                updateProductList(); // Обновление списка товаров после успешного удаления из корзины
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
+
+    // Удаление товара из корзины ------------------------------------------------------- //
 
     // Добавление товара в корзину
     const addProductToCart = () => {
@@ -169,6 +247,7 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
 
     return (
         <>
+            
             <div className="wrapper-card">
                 <div className="container-card">
                     {role === 'ADMIN' ? (
@@ -190,8 +269,8 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
                             <div className="right">
                                 <div className="done"><i className="material-icons">done</i></div>
                                 <div className="details">
-                                    <h1>Chair</h1>
-                                    <p>Added to your cart</p>
+                                    <h1>{product.productName}</h1>
+                                    <p>Добавлено в корзину</p>
                                 </div>
                                 <div className="remove" onClick={() => removeProductFromCart(product.id)}><i className="material-icons">clear</i></div>
                             </div>
@@ -237,7 +316,9 @@ function ProductCard({ isAuth, product, role, id, isClicked, setIsClicked }) {
                         </table>
                     </div>
                 </div>
+                
             </div>
+            {isModalOpen && <Modal content={modalContent} closeModal={() => setIsModalOpen(false)} />}
         </>
     );
 }

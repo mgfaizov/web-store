@@ -29,9 +29,10 @@ public class CartService {
         return cartRepository.findById(id).orElse(null);
     }
 
-    // public Product getProductByName(String productName) {
-    //     return productRepository.findByProductName(productName);
-    // }
+    public boolean checkCartById(Long id) {
+        Cart cart = cartRepository.findById(id).orElse(null);
+        return cart != null;
+    }
 
     public Cart updateCartById(Long id, UpdateCartDTO updateCartDTO) {
         Cart existingCart = cartRepository.findById(id).orElse(null);
@@ -48,6 +49,10 @@ public class CartService {
         existingCart.setQuantity(updateCartDTO.getQuantity());
 
         return cartRepository.save(existingCart);
+    }
+
+    public void clearCart() {
+        cartRepository.deleteAll(); // Удаление всех товаров из корзины
     }
 
     @Transactional

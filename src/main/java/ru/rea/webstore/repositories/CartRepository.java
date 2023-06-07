@@ -1,5 +1,7 @@
 package ru.rea.webstore.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +16,4 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     @Query("DELETE FROM Cart c WHERE c.product.id = :productId")
     void deleteByProductId(@Param("productId") Long productId);
 
-    // @Query("SELECT COUNT(c) > 0 FROM Cart c WHERE c.product.id = :productId AND c.user.id = :userId")
-    // boolean checkProductInCartForUser(@Param("productId") Long productId, @Param("userId") Long userId);
 }
